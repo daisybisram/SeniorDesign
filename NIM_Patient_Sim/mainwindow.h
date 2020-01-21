@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include "GpioControl/gpiocontrol.h"
+#include "adccontrol.h"
+#include "spiControl.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -18,6 +20,8 @@ public:
 
 public:
     GpioControl *gpioControl;
+    AdcControl *adcControl;
+    SpiControl *spiControl;
 
 private:
     Ui::MainWindow *ui;

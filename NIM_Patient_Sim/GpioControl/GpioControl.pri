@@ -1,8 +1,12 @@
 INCLUDEPATH += $${PWD}
 
-SOURCES     += $${PWD}/gpiocontrol.cpp
+SOURCES     += $${PWD}/gpiocontrol.cpp \
+    $$PWD/adccontrol.cpp \
+    $$PWD/spicontrol.cpp
 
-HEADERS     += $${PWD}/gpiocontrol.h
+HEADERS     += $${PWD}/gpiocontrol.h \
+    $$PWD/adccontrol.h \
+    $$PWD/spicontrol.h
 
 FORMS       += $${PWD}/gpiocontrol.ui
 

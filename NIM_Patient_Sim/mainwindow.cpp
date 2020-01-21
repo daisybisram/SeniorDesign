@@ -8,6 +8,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     gpioControl = new GpioControl(ui->gpioCntrl);
+    gpioControl->ToggleGpio(32);
+    adcControl = new AdcControl();
 }
 
 MainWindow::~MainWindow()

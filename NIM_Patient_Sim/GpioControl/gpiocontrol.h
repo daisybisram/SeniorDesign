@@ -26,4 +26,4 @@ public slots:
     void ToggleGpio(int gpioNum);
 };
 
-#endif // GPIOCONTROL_H
+#endif // ADCCONTROL_H

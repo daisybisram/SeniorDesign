@@ -1,0 +1,7 @@
+#include "gpiocontrol.h"
+
+void dummy()
+{
+    GpioControl *gpioControl = new GpioControl();
+    gpioControl->ToggleGpio(32);
+}

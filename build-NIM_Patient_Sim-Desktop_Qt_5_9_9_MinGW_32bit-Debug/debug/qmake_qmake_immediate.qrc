@@ -1,0 +1,8 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="/">
+<file alias="GpioControl/gpiocontrol.cpp">C:/Users/bisrad2/Desktop/SeniorDesign/SeniorDesign/NIM_Patient_Sim/GpioControl/gpiocontrol.cpp</file>
+<file alias="GpioControl/gpiocontrol.h">C:/Users/bisrad2/Desktop/SeniorDesign/SeniorDesign/NIM_Patient_Sim/GpioControl/gpiocontrol.h</file>
+<file alias="GpioControl/GpioControl.pri">C:/Users/bisrad2/Desktop/SeniorDesign/SeniorDesign/NIM_Patient_Sim/GpioControl/GpioControl.pri</file>
+<file alias="GpioControl/gpiocontrol.ui">C:/Users/bisrad2/Desktop/SeniorDesign/SeniorDesign/NIM_Patient_Sim/GpioControl/gpiocontrol.ui</file>
+</qresource>
+</RCC>
