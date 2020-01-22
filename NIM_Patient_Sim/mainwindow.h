@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include "GpioControl/gpiocontrol.h"
 #include "adccontrol.h"
-#include "spiControl.h"
+#include "spicontrol.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

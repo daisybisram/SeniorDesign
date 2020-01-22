@@ -6,9 +6,9 @@
 #include <QtWidgets>
 #include "libdigiapix/spi.h"
 
-namespace Ui {
-class SpiControl;
-}
+//namespace Ui {
+//class SpiControl;
+//}
 
 class SpiControl : public QScrollArea
 {
@@ -22,7 +22,7 @@ public:
     static int spi_Read(int page_index, uint8_t* data);
 
 public:
-    Ui::SpiControl *ui;
+    //Ui::SpiControl *ui;
 
 signals:
 

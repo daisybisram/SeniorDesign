@@ -6,9 +6,9 @@
 #include <QtWidgets>
 #include "libdigiapix/adc.h"
 
-namespace Ui {
-class AdcControl;
-}
+//namespace Ui {
+//class AdcControl;
+//}
 
 class AdcControl : public QScrollArea
 {
@@ -19,7 +19,9 @@ public:
     void Start();
 
 public:
-    Ui::AdcControl *ui;
+    //Ui::AdcControl *ui;
+    void Start(uint8_t interval);
+    void Stop(void);
 
 signals:
     void postiveEdgeDetected(uint8_t mv);

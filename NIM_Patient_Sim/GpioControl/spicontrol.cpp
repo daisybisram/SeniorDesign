@@ -1,95 +1,55 @@
 #include "spicontrol.h"
-#include "ui_spicontrol.h"
+//#include "ui_spicontrol.h"
 #include "stdint.h"
+#include <unistd.h>
+
+#define WREN				0x06
+#define WRDI				0x04
+#define WRITE				0x02
+#define READ				0x03
+#define RDSR				0x05
+
+#define CLK_MODE			SPI_CLK_MODE_0
+#define CHIP_SELECT			SPI_CS_ACTIVE_LOW
+#define BIT_ORDER			SPI_BO_MSB_FIRST
+#define MAX_BUS_SPEED		1000000 /* 1MHz */
+#define BITS_PER_WORD		SPI_BPW_8
+
+#define OPERATION_BYTES		1
+
+static spi_t *spi_dev;
+static unsigned int page_size, address_bytes = 0;
+static uint8_t *tx_buffer;
+static uint8_t *rx_buffer;
 
 SpiControl::SpiControl(QWidget *parent) :
-    QScrollArea(parent),
-    ui(new Ui::SpiControl)
+    QScrollArea(parent)
+    //ui(new Ui::SpiControl)
 {
-    static spi_t *spi_dev;
-    static unsigned int page_size, address_bytes = 0;
-    static uint8_t *tx_buffer;
-    static uint8_t *rx_buffer;
-
-    int spi_device = 0, spi_slave = 0, page_index = 0, i = 0;
-    spi_transfer_cfg_t transfer_mode = {0};
-    char *name = basename(argv[0]);
+    int spi_device = 0, spi_slave = 0;
+    spi_transfer_cfg_t transfer_mode;
 
     /* Request SPI */
     spi_dev = ldx_spi_request((unsigned int)spi_device, (unsigned int)spi_slave);
-    if (!spi_dev)
-    {
-        printf("Failed to initialize SPI\n");
-        return EXIT_FAILURE;
-    }
 
     /* Configure the transfer mode */
     transfer_mode.clk_mode = CLK_MODE;
     transfer_mode.chip_select = CHIP_SELECT;
     transfer_mode.bit_order = BIT_ORDER;
-    if (ldx_spi_set_transfer_mode(spi_dev, &transfer_mode) != EXIT_SUCCESS) {
-        printf("Failed to configure SPI transfer mode\n");
-        return EXIT_FAILURE;
-    }
+    ldx_spi_set_transfer_mode(spi_dev, &transfer_mode);
 
     /* Configure the bits-per-word */
-    if (ldx_spi_set_bits_per_word(spi_dev, BITS_PER_WORD) != EXIT_SUCCESS) {
-        printf("Failed to configure SPI bits-per-word\n");
-        return EXIT_FAILURE;
-    }
+    ldx_spi_set_bits_per_word(spi_dev, BITS_PER_WORD);
 
     /* Configure the max bus speed */
-    if (ldx_spi_set_speed(spi_dev, MAX_BUS_SPEED) != EXIT_SUCCESS) {
-        printf("Failed to configure SPI max bus speed\n");
-        return EXIT_FAILURE;
-    }
+    ldx_spi_set_speed(spi_dev, MAX_BUS_SPEED);
 
     /* Set the write-enable bit. */
-    if (spi_Write_enable() != EXIT_SUCCESS) {
-        printf("Failed to set the write-enable bit\n");
-        return EXIT_FAILURE;
-    }
+    //spi_Write_enable();
 
     /* Initialize the write and read buffers */
     tx_buffer = (uint8_t *)calloc(page_size, sizeof(uint8_t));
     rx_buffer = (uint8_t *)calloc(page_size, sizeof(uint8_t));
-    if (tx_buffer == NULL || rx_buffer == NULL) {
-        printf("Failed to initialize read/write buffers\n");
-        return EXIT_FAILURE;
-    }
-
-    /* Fill the data to write with random bytes.
-    srand(time(NULL));
-    for (i = 0; i < (page_size); i++) {
-        tx_buffer[i] = rand() % 255;
-    }*/
-
-    /* Write the page. */
-    if (spi_Write(page_index, tx_buffer) != EXIT_SUCCESS) {
-        printf("Write page failed\n");
-        return EXIT_FAILURE;
-    }
-
-    /* Read the page. */
-    if (spi_Read(page_index, rx_buffer) != EXIT_SUCCESS) {
-        printf("Read page failed\n");
-        return EXIT_FAILURE;
-    }
-
-    /* Validate the read data. */
-    printf("[INFO] Validating read data...\n");
-    for (i = 0; i < page_size; i++) {
-        printf("  Byte %d: Write 0x%02x - Read 0x%02x", i,
-                tx_buffer[i], rx_buffer[i]);
-        if (tx_buffer[i] == rx_buffer[i]) {
-            printf(" - Correct\n");
-        } else {
-            printf(" - Incorrect\n");
-        }
-    }
-
-    /* 'atexit' executes the cleanup function */
-    return EXIT_SUCCESS;
 }
 
 SpiControl::~SpiControl()
@@ -135,6 +95,30 @@ static int spi_Read_status(uint8_t *status)
     write_data[0] = RDSR;
     if (ldx_spi_transfer(spi_dev, write_data, read_data, 2) != EXIT_SUCCESS)
     {
+        return EXIT_FAILURE;
+    }
+
+    printf("[INFO] SPI Status Register is 0x%02x\n", read_data[1]);
+    *status = read_data[1];
+
+    return EXIT_SUCCESS;
+}
+
+/*
+ * read_status_register() - Reads the SPI status register
+ *
+ * @status:	Variable to store the read status.
+ *
+ * Return: EXIT_SUCCESS on success, EXIT_FAILURE otherwise.
+ */
+static int read_status_register(uint8_t *status)
+{
+    uint8_t write_data[2] = {0};
+    uint8_t read_data[2] = {0};
+
+    printf("[INFO] Reading status register...\n");
+    write_data[0] = RDSR;
+    if (ldx_spi_transfer(spi_dev, write_data, read_data, 2) != EXIT_SUCCESS) {
         return EXIT_FAILURE;
     }
 

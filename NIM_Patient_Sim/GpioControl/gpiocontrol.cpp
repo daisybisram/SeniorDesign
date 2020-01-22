@@ -4,9 +4,9 @@
 #include "stdint.h"
 
 /* GPIO INITIALIZATION */
-gpio_tgpio_output0;
+gpio_t *gpio_output0;
 gpio_t *gpio_output1;
-gpio_t *gpio_output2; *
+gpio_t *gpio_output2;
 gpio_t *gpio_input0;
 
 /*  GPIO TESTING  */

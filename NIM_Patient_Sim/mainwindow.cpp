@@ -10,6 +10,8 @@ MainWindow::MainWindow(QWidget *parent)
     gpioControl = new GpioControl(ui->gpioCntrl);
     gpioControl->ToggleGpio(32);
     adcControl = new AdcControl();
+    spiControl = new SpiControl();
+    spiControl->spi_Read()
 }
 
 MainWindow::~MainWindow()
