@@ -2,6 +2,26 @@
 //#include "ui_spicontrol.h"
 #include "stdint.h"
 #include <unistd.h>
+#include <errno.h>
+#include <libgen.h>
+#include <limits.h>
+#include <signal.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+#include <libdigiapix/spi.h>
+
+#define DEFAULT_SPI_ALIAS		"DEFAULT_SPI"
+#define DEFAULT_SPI_ADDRESS_SIZE	1
+#define DEFAULT_SPI_PAGE_SIZE		16
+#define DEFAULT_SPI_PAGE_INDEX		0
+
+#define ARG_SPI_DEVICE		0
+#define ARG_SPI_SLAVE		1
+
+#define BUFF_SIZE			256
 
 #define WREN				0x06
 #define WRDI				0x04
@@ -36,6 +56,7 @@ SpiControl::SpiControl(QWidget *parent) :
     transfer_mode.clk_mode = CLK_MODE;
     transfer_mode.chip_select = CHIP_SELECT;
     transfer_mode.bit_order = BIT_ORDER;
+
     ldx_spi_set_transfer_mode(spi_dev, &transfer_mode);
 
     /* Configure the bits-per-word */
@@ -68,7 +89,7 @@ SpiControl::~SpiControl()
  * Return: EXIT_SUCCESS on success, EXIT_FAILURE otherwise.
  */
 
-static int spi_Write_enable(void)
+int SpiControl::spi_Write_enable(void)
 {
     uint8_t write_data[1] = {0};
 
@@ -86,10 +107,10 @@ static int spi_Write_enable(void)
  * Return: EXIT_SUCCESS on success, EXIT_FAILURE otherwise.
  */
 
-static int spi_Read_status(uint8_t *status)
+int SpiControl::spi_Read_status(uint8_t *status)
 {
-    uint8_t write_data[2] = {0};
-    uint8_t read_data[2] = {0};
+    uint8_t write_data[2] = {0, 0};
+    uint8_t read_data[2] = {0, 0};
 
     printf("[INFO] Reading status register...\n");
     write_data[0] = RDSR;
@@ -137,7 +158,7 @@ static int read_status_register(uint8_t *status)
  * Return: EXIT_SUCCESS on success, EXIT_FAILURE otherwise.
  */
 
-static int spi_Write(int page_index, uint8_t* data)
+int SpiControl::spi_Write(int page_index, uint8_t* data)
 {
     uint8_t *write_data;
     uint16_t page_address = page_size * page_index;
@@ -206,7 +227,7 @@ static int spi_Write(int page_index, uint8_t* data)
  * Return: EXIT_SUCCESS on success, EXIT_FAILURE otherwise.
  */
 
-static int spi_Read(int page_index, uint8_t* data)
+int SpiControl::spi_Read(int page_index, uint8_t* data)
 {
     uint8_t *write_data;
     uint8_t *read_data;

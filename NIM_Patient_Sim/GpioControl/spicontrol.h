@@ -16,10 +16,10 @@ class SpiControl : public QScrollArea
 public:
     explicit SpiControl(QWidget *parent = nullptr);
     ~SpiControl();
-    static int spi_Write_enable();
-    static int spi_Read_status(uint8_t *status);
-    static int spi_Write(int page_index, uint8_t* data);
-    static int spi_Read(int page_index, uint8_t* data);
+    int spi_Write_enable();
+    int spi_Read_status(uint8_t *status);
+    int spi_Write(int page_index, uint8_t* data);
+    int spi_Read(int page_index, uint8_t* data);
 
 public:
     //Ui::SpiControl *ui;
