@@ -1,6 +1,11 @@
 #ifndef ADCCONTROL_H
 #define ADCCONTROL_H
 
+#include <QScrollArea>
+#include <QWidget>
+#include <QtWidgets>
+#include "libdigiapix/adc.h"
+
 #define ADS_PD_CNTL_ADDR	0x004h		//controls low power modes
 #define ADS_SDI_CNTL_ADDR	0x008h		//selects SPI protocol for writing data
 #define ADS_SDO_CNTL_ADDR	0x00Ch		//configures protocol for reading data
@@ -11,10 +16,6 @@
 #define ADS_OFST_CAL_ADDR	0x020h		//selcts external V reference for offset calibration
 #define ADS_REF_MRG_ADDR	0x030h		//sescts margin for reference buffer output
 
-#include <QScrollArea>
-#include <QWidget>
-#include <QtWidgets>
-#include "libdigiapix/adc.h"
 
 //namespace Ui {
 //class AdcControl;
