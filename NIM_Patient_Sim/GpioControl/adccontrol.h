@@ -35,7 +35,7 @@ public:
     void Stop(void);
 
 signals:
-    void postiveEdgeDetected(uint8_t mv);
+    void EdgeDetected(uint8_t mv);
 
 public slots:
 };
