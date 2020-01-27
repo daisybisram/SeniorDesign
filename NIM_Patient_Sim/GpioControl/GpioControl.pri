@@ -6,6 +6,7 @@ SOURCES     += $${PWD}/gpiocontrol.cpp \
 
 HEADERS     += $${PWD}/gpiocontrol.h \
     $$PWD/adccontrol.h \
+    $$PWD/dac.h \
     $$PWD/spicontrol.h
 
 FORMS       += $${PWD}/gpiocontrol.ui

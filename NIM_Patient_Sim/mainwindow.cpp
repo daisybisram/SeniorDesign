@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "dac.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -8,11 +9,13 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     gpioControl = new GpioControl(ui->gpioCntrl);
-    gpioControl->ToggleGpio(32);
     adcControl = new AdcControl();
     spiControl = new SpiControl();
-    uint8_t val;
-    spiControl->spi_Read_status(&val);
+
+    uint16_t data;
+    spiControl->spi_Read_DAC(DAC_DEVID_ADDR, &data);
+    printf("%d\n", data);
+
 }
 
 MainWindow::~MainWindow()

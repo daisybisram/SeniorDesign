@@ -16,7 +16,6 @@
 #define ADS_OFST_CAL_ADDR	0x020h		//selcts external V reference for offset calibration
 #define ADS_REF_MRG_ADDR	0x030h		//sescts margin for reference buffer output
 
-
 //namespace Ui {
 //class AdcControl;
 //}
@@ -31,13 +30,13 @@ public:
 
 public:
     //Ui::AdcControl *ui;
-    void Start(uint8_t interval);
     void Stop(void);
 
 signals:
     void postiveEdgeDetected(uint8_t mv);
 
 public slots:
+     void Start(uint8_t interval);
 };
 
 #endif // ADCCONTROL_H

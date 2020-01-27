@@ -18,16 +18,6 @@ gpio_t *gpio_output3;
 #define USER_LED2   36
 #define STIM_DETECT 37
 
-/* SPI INITIALIZATION */
-spi_t *spi_0;
-
-#define Default_Alias       "DEFAULT_SPI"
-#define CLK_MODE			SPI_CLK_MODE_0            //CPOL=0 CPHA=0
-#define CHIP_SELECT			SPI_CS_ACTIVE_LOW
-#define BIT_ORDER			SPI_BO_MSB_FIRST
-#define MAX_BUS_SPEED		1000000                   // 1MHz
-#define BITS_PER_WORD		SPI_BPW_8
-
          /* Digital Potentiometer Addresses */
 #define RDAC_1 0000                                        
 #define RDAC_2 0001
@@ -70,13 +60,6 @@ GpioControl::GpioControl(QWidget *parent) :
     connect(ui->pushButton, &QPushButton::released, [this]() { ToggleGpio(USER_LED2); });
     connect(ui->pushButton_2, &QPushButton::released, [this]() { ToggleGpio(USER_LED1); });
     connect(ui->pushButton_3, &QPushButton::released, [this]() { ToggleGpio(USER_LED0); });
-
-
-/* SPI - Digital Potentiometer */
-    int spi_master, spi_slave = 0;
-    spi_master = ldx_spi_get_device("DEFAULT_SPI");
-    spi_0 = ldx_spi_request((unsigned int)spi_master, (unsigned int)spi_slave);
-
 }
 
 GpioControl::~GpioControl()
