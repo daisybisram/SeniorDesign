@@ -143,53 +143,33 @@ int SpiControl::spi_Read_DAC(uint8_t reg, uint16_t *data)
         {
             return EXIT_FAILURE;
         }
-
-
-    //*data = rx_data<<4;
-
-   return EXIT_SUCCESS;*/
+*/
     uint8_t read_reg = DAC_READ_BIT | reg;
 
     uint8_t tx_data8[3] = {read_reg, 0x00, 0x00};
     uint8_t rx_data8[3] = {0x00, 0x00, 0x00};
 
-    /*ldx_spi_write(spi_dev, tx_data8, 2);
-
-    //ldx_spi_write(spi_dev, tx_data8, 2);
-
-    ldx_spi_read(spi_dev, rx_data8, 2);
-
-    ldx_spi_read(spi_dev, rx_data8, 2);*/
-
-//    if (ldx_spi_transfer(spi_dev, tx_data8, rx_data8, 3) != EXIT_SUCCESS)
-//        {
-//            return EXIT_FAILURE;
-//        }
-
-//    rx_data8[0] = 0x81;
-//    rx_data8[1] = 0x00;
-//    rx_data8[2] = 0x00;
-
-
 //READ ACCESS CYCLE
+
     if (ldx_spi_write(spi_dev, tx_data8, 3) != EXIT_SUCCESS)
-        {
-            return EXIT_FAILURE;
-        }
-    if (ldx_spi_read(spi_dev, rx_data8, 3) != EXIT_SUCCESS)
         {
             return EXIT_FAILURE;
         }
 
 //READ CYCLE
-//After the READ ACCESS cycle, we send any command on MOSI, but the data we'll get back will be
-//    from the previous READ ACCESS command
+//After the READ ACCESS cycle, we send any command on MOSI, but the data we'll get back will be from the previous READ ACCESS command
 //On MISO, we will see the first byte echoing our command from the READ ACCESS cycle
-  //  tx_data8[0] = 0x84; //so we know on MOSI we won't be trying to read DEVID again.
-  if (ldx_spi_transfer(spi_dev, tx_data8, rx_data8, 3) != EXIT_SUCCESS)
+//so we know on MOSI we won't be trying to read DEVID again.
+
+    if (ldx_spi_read(spi_dev, rx_data8, 3) != EXIT_SUCCESS)
         {
             return EXIT_FAILURE;
         }
+
+  /*if (ldx_spi_transfer(spi_dev, tx_data8, rx_data8, 3) != EXIT_SUCCESS)
+        {
+            return EXIT_FAILURE;
+        }*/
 
    *data = rx_data8[1] << 8 | rx_data8[2];
     return EXIT_SUCCESS;
