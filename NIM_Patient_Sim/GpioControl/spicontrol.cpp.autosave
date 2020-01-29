@@ -180,16 +180,14 @@ int SpiControl::spi_Read_DAC(uint8_t reg, uint16_t *data)
         {
             return EXIT_FAILURE;
         }
-
 //READ CYCLE
-//After the READ ACCESS cycle, we send any command on MOSI, but the data we'll get back will be
-//    from the previous READ ACCESS command
+//After the READ ACCESS cycle, we send any command on MOSI, but the data we'll get back will be from the previous READ ACCESS command
 //On MISO, we will see the first byte echoing our command from the READ ACCESS cycle
-  //  tx_data8[0] = 0x84; //so we know on MOSI we won't be trying to read DEVID again.
-  if (ldx_spi_transfer(spi_dev, tx_data8, rx_data8, 3) != EXIT_SUCCESS)
+//so we know on MOSI we won't be trying to read DEVID again.
+  /*if (ldx_spi_transfer(spi_dev, tx_data8, rx_data8, 3) != EXIT_SUCCESS)
         {
             return EXIT_FAILURE;
-        }
+        }*/
 
    *data = rx_data8[1] << 8 | rx_data8[2];
     return EXIT_SUCCESS;

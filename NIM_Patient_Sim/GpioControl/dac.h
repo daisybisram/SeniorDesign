@@ -2,7 +2,7 @@
 #define DAC_H
 
 #define DAC_WRITE_BIT       0x0
-#define DAC_READ_BIT        0x800000
+#define DAC_READ_BIT        0x80
 #define DAC_NOP_ADDR		0x00		//no operation commands
 #define DAC_DEVID_ADDR		0x01		//sets device ID, resolution, # of channels
 #define DAC_SYNC_ADDR		0x2		//sets synchronization parameters

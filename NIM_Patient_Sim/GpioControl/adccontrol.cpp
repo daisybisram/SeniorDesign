@@ -31,7 +31,7 @@ AdcControl::~AdcControl()
 int adcCallback(int sample, void *arg)
 {
     // When positive edge is detected
-    emit adcControl->postiveEdgeDetected(sample);
+    //emit adcControl->postiveEdgeDetected(sample);
 }
 
 void AdcControl::Start(uint8_t interval)
