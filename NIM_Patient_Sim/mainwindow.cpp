@@ -11,10 +11,12 @@ MainWindow::MainWindow(QWidget *parent)
     gpioControl = new GpioControl(ui->gpioCntrl);
     adcControl = new AdcControl();
     spiControl = new SpiControl();
-
+//DAC_DEVID_ADDR
     uint16_t data;
+    spiControl->spi_Read_DAC(DAC_CONFIG_ADDR, &data);
+    spiControl->spi_Write_DAC(DAC_CONFIG_ADDR, 0x0001);
     spiControl->spi_Read_DAC(DAC_DEVID_ADDR, &data);
-    printf("%d\n", data);
+    spiControl->spi_Read_DAC(DAC_CONFIG_ADDR, &data);
 
 }
 

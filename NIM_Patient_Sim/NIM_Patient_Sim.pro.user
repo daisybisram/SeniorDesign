@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<<<<<<< HEAD
-<!-- Written by QtCreator 4.10.1, 2020-01-25T11:57:47. -->
-=======
-<!-- Written by QtCreator 4.11.0, 2020-01-27T12:32:21. -->
->>>>>>> 3259282b6121420e8f0f8c09d0dec7b974f8f2e4
+<!-- Written by QtCreator 4.10.1, 2020-01-31T18:17:26. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -60,7 +56,8 @@
   <variable>ProjectExplorer.Project.PluginSettings</variable>
   <valuemap type="QVariantMap">
    <valuelist type="QVariantList" key="ClangCodeModel.CustomCommandLineKey"/>
-   <value type="bool" key="ClangCodeModel.UseGlobalConfig">true</value>
+   <value type="bool" key="ClangCodeModel.UseGlobalConfig">false</value>
+   <value type="QString" key="ClangCodeModel.WarningConfigId">{87d4b44a-3261-48b9-8c22-eb1c3fd740d8}</value>
   </valuemap>
  </data>
  <data>
@@ -281,28 +278,34 @@
       <valuelist type="QVariantList" key="ProjectExplorer.RunConfiguration.LastDeployedFiles">
        <value type="QString">/home/sw/workspace/Projects/build-NIM_Patient_Sim-CCIMX6SBC_DEY-Debug/NIM_Patient_Sim</value>
        <value type="QString">/home/sw/workspace/Projects/build-NIM_Patient_Sim-CCIMX6SBC_DEY-Release/NIM_Patient_Sim</value>
+       <value type="QString">/home/sw/workspace/Projects/build-NIM_Patient_Sim-CCIMX6SBC_DEY-Debug/NIM_Patient_Sim</value>
       </valuelist>
       <valuelist type="QVariantList" key="ProjectExplorer.RunConfiguration.LastDeployedHosts">
+       <value type="QString">10.74.113.229</value>
        <value type="QString">10.74.113.159</value>
        <value type="QString">10.74.113.159</value>
       </valuelist>
       <valuelist type="QVariantList" key="ProjectExplorer.RunConfiguration.LastDeployedRemotePaths">
        <value type="QString">/opt/NIM_Patient_Sim/bin</value>
        <value type="QString">/opt/NIM_Patient_Sim/bin</value>
+       <value type="QString">/opt/NIM_Patient_Sim/bin</value>
       </valuelist>
       <valuelist type="QVariantList" key="ProjectExplorer.RunConfiguration.LastDeployedSysroots">
+       <value type="QString"></value>
        <value type="QString"></value>
        <value type="QString"></value>
       </valuelist>
       <value type="bool" key="RemoteLinux.GenericDirectUploadStep.IgnoreMissingFiles">false</value>
       <value type="bool" key="RemoteLinux.GenericDirectUploadStep.Incremental">true</value>
       <valuelist type="QVariantList" key="RemoteLinux.LastDeployedLocalTimes">
-       <value type="QDateTime">2020-01-23T12:51:49.503</value>
+       <value type="QDateTime">2020-01-31T18:05:59.594</value>
        <value type="QDateTime">2020-01-23T11:47:30.787</value>
+       <value type="QDateTime">2020-01-31T12:50:00.394</value>
       </valuelist>
       <valuelist type="QVariantList" key="RemoteLinux.LastDeployedRemoteTimes">
-       <value type="QDateTime">2019-09-27T17:54:38.000</value>
+       <value type="QDateTime">2019-09-27T22:32:54.000</value>
        <value type="QDateTime">2020-01-23T11:45:55.000</value>
+       <value type="QDateTime">2019-09-27T17:56:09.000</value>
       </valuelist>
      </valuemap>
      <value type="int" key="ProjectExplorer.BuildStepList.StepsCount">3</value>

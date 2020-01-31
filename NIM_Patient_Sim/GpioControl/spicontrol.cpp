@@ -150,28 +150,66 @@ int SpiControl::spi_Read_DAC(uint8_t reg, uint16_t *data)
     uint8_t rx_data8[3] = {0x00, 0x00, 0x00};
 
 //READ ACCESS CYCLE
+  if (ldx_spi_write(spi_dev, tx_data8, 3) != EXIT_SUCCESS)
+            {
+                return EXIT_FAILURE;
+            }
 
-    if (ldx_spi_write(spi_dev, tx_data8, 3) != EXIT_SUCCESS)
-        {
-            return EXIT_FAILURE;
-        }
 
 //READ CYCLE
 //After the READ ACCESS cycle, we send any command on MOSI, but the data we'll get back will be from the previous READ ACCESS command
 //On MISO, we will see the first byte echoing our command from the READ ACCESS cycle
 //so we know on MOSI we won't be trying to read DEVID again.
 
-    if (ldx_spi_read(spi_dev, rx_data8, 3) != EXIT_SUCCESS)
+    /*if (ldx_spi_read(spi_dev, rx_data8, 3) != EXIT_SUCCESS)
         {
             return EXIT_FAILURE;
         }
+*/
 
-  /*if (ldx_spi_transfer(spi_dev, tx_data8, rx_data8, 3) != EXIT_SUCCESS)
+  /*
+    if (ldx_spi_transfer(spi_dev, tx_data8, rx_data8, 3) != EXIT_SUCCESS)
+            {
+                return EXIT_FAILURE;
+            }*/
+
+    if (ldx_spi_read(spi_dev, rx_data8, 3) != EXIT_SUCCESS)
+            {
+                return EXIT_FAILURE;
+            }
+
+   *data = rx_data8[1] << 8 | rx_data8[2];
+        return EXIT_SUCCESS;
+
+}
+
+int SpiControl::spi_Write_DAC(uint8_t reg, uint16_t data)
+{/*
+    uint8_t write_reg = DAC_WRITE_BIT | reg;
+    uint8_t write_data_8MSB = data>>8;
+    uint8_t write_data_8LSB = data;
+
+    uint8_t tx_data8[3] = {write_reg, write_data_8MSB, write_data_8LSB};
+    uint8_t rx_data8[3] = {0x00, 0x00, 0x00};
+
+
+    if (ldx_spi_write(spi_dev, tx_data8, 3) != EXIT_SUCCESS)
         {
             return EXIT_FAILURE;
         }*/
 
-   *data = rx_data8[1] << 8 | rx_data8[2];
+    /*if (ldx_spi_transfer(spi_dev, tx_data8, rx_data8, 3) != EXIT_SUCCESS)
+        {
+            return EXIT_FAILURE;
+        }*/
+
+//Try to write the CONFIG reg
+
+    uint8_t tx_data8[3] = {0x03, 0x00, 0x01};
+    if (ldx_spi_write(spi_dev, tx_data8, 3) != EXIT_SUCCESS)
+        {
+            return EXIT_FAILURE;
+        }
     return EXIT_SUCCESS;
 
 }

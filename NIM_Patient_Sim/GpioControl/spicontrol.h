@@ -17,6 +17,7 @@ public:
     explicit SpiControl(QWidget *parent = nullptr);
     ~SpiControl();
     int spi_Read_DAC(uint8_t reg, uint16_t *data);
+    int spi_Write_DAC(uint8_t reg, uint16_t write_data);
 
 public:
     //Ui::SpiControl *ui;
