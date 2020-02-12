@@ -79,71 +79,9 @@ SpiControl::~SpiControl()
     free(rx_buffer);
 }
 
-/*
- * spi_Read_status() - Reads the SPI status register
- *
- * @status:	Variable to store the read status.
- *
- * Return: EXIT_SUCCESS on success, EXIT_FAILURE otherwise.
 
-
-int SpiControl::spi_Read_register(uint8_t reg, uint16_t *data)
-{
-    uint8_t write_data = reg;
-    uint8_t read_data = 0;
-
-   write_data = (reg << 16) | read_data;
-//    if (ldx_spi_transfer(spi_dev, (uint8_t*)&write_data, (uint8_t*)&read_data, 4) != EXIT_SUCCESS)
-//    {
-//        return EXIT_FAILURE;
-//    }
-
-    if (ldx_spi_transfer(spi_dev, &write_data, &read_data, 1) != EXIT_SUCCESS)
-    {
-        return EXIT_FAILURE;
-    }
-
-
-//     write_data = (reg << 16) | read_data;
-     if (ldx_spi_transfer(spi_dev, (uint8_t*)write_data, (uint8_t*)read_data, 4) != EXIT_SUCCESS)
-//     {
-//         return EXIT_FAILURE;
-//     }
-
-    *data = read_data;
-
-    return EXIT_SUCCESS;
-}*/
-
-/**
- * ldx_spi_read() - Read data from the SPI bus
- *
- * @spi:	A requested SPI to read data from.
- * @rx_data:	Array of bytes to store read data into.
- * @length:	Number of bytes to read.
- *
- * Return: EXIT_SUCCESS on success, EXIT_FAILURE otherwise.
- */
 int SpiControl::spi_Read_DAC(uint8_t reg, uint16_t *data)
 {
-    /*uint32_t rx_data = 0x0;
-    uint32_t tx_data = 0x0;
-
-    tx_data = (DAC_READ_BIT | (reg << 16) | tx_data);
-
-    rx_data = (DAC_READ_BIT | (reg << 16) | rx_data);
-
-
-    if (ldx_spi_transfer(spi_dev, (uint8_t*)&tx_data, (uint8_t*)&rx_data, 3) != EXIT_SUCCESS)
-        {
-            return EXIT_FAILURE;
-        }
-
-    if (ldx_spi_transfer(spi_dev, (uint8_t*)&tx_data, (uint8_t*)&rx_data, 3) != EXIT_SUCCESS)
-        {
-            return EXIT_FAILURE;
-        }
-*/
     uint8_t read_reg = DAC_READ_BIT | reg;
 
     uint8_t tx_data8[3] = {read_reg, 0x00, 0x00};
@@ -161,18 +99,6 @@ int SpiControl::spi_Read_DAC(uint8_t reg, uint16_t *data)
 //On MISO, we will see the first byte echoing our command from the READ ACCESS cycle
 //so we know on MOSI we won't be trying to read DEVID again.
 
-    /*if (ldx_spi_read(spi_dev, rx_data8, 3) != EXIT_SUCCESS)
-        {
-            return EXIT_FAILURE;
-        }
-*/
-
-  /*
-    if (ldx_spi_transfer(spi_dev, tx_data8, rx_data8, 3) != EXIT_SUCCESS)
-            {
-                return EXIT_FAILURE;
-            }*/
-
     if (ldx_spi_read(spi_dev, rx_data8, 3) != EXIT_SUCCESS)
             {
                 return EXIT_FAILURE;
@@ -184,7 +110,7 @@ int SpiControl::spi_Read_DAC(uint8_t reg, uint16_t *data)
 }
 
 int SpiControl::spi_Write_DAC(uint8_t reg, uint16_t data)
-{/*
+{
     uint8_t write_reg = DAC_WRITE_BIT | reg;
     uint8_t write_data_8MSB = data>>8;
     uint8_t write_data_8LSB = data;
@@ -196,20 +122,52 @@ int SpiControl::spi_Write_DAC(uint8_t reg, uint16_t data)
     if (ldx_spi_write(spi_dev, tx_data8, 3) != EXIT_SUCCESS)
         {
             return EXIT_FAILURE;
-        }*/
+        }
 
-    /*if (ldx_spi_transfer(spi_dev, tx_data8, rx_data8, 3) != EXIT_SUCCESS)
+    return EXIT_SUCCESS;
+
+}
+
+
+int SpiControl::spi_Read_ADC(uint8_t reg, uint8_t *data)
+{
+
+uint8_t read_reg = 0;
+
+uint8_t tx_data8[3] = {read_reg, 0x00, 0x00};
+uint8_t rx_data8[3] = {0x00, 0x00, 0x00};
+
+//READ ACCESS CYCLE
+if (ldx_spi_write(spi_dev, tx_data8, 3) != EXIT_SUCCESS)
         {
             return EXIT_FAILURE;
-        }*/
+        }
 
-//Try to write the CONFIG reg
 
-    uint8_t tx_data8[3] = {0x03, 0x00, 0x01};
+if (ldx_spi_read(spi_dev, rx_data8, 3) != EXIT_SUCCESS)
+        {
+            return EXIT_FAILURE;
+        }
+
+*data = rx_data8[1] << 8 | rx_data8[2];
+    return EXIT_SUCCESS;
+
+}
+
+int SpiControl::spi_Write_ADC(uint8_t reg, uint8_t data)
+{
+    uint8_t write_reg = 0;
+    uint8_t write_data_8MSB = data>>8;
+    uint8_t write_data_8LSB = data;
+
+    uint8_t tx_data8[3] = {write_reg, write_data_8MSB, write_data_8LSB};
+    uint8_t rx_data8[3] = {0x00, 0x00, 0x00};
+
+
     if (ldx_spi_write(spi_dev, tx_data8, 3) != EXIT_SUCCESS)
         {
             return EXIT_FAILURE;
         }
-    return EXIT_SUCCESS;
 
+    return EXIT_SUCCESS;
 }

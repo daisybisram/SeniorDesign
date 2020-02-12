@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.10.1, 2020-01-31T18:17:26. -->
+<!-- Written by QtCreator 4.10.1, 2020-02-11T12:57:37. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -277,10 +277,12 @@
       <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">RemoteLinux.DirectUploadStep</value>
       <valuelist type="QVariantList" key="ProjectExplorer.RunConfiguration.LastDeployedFiles">
        <value type="QString">/home/sw/workspace/Projects/build-NIM_Patient_Sim-CCIMX6SBC_DEY-Debug/NIM_Patient_Sim</value>
+       <value type="QString">/home/sw/workspace/Projects/build-NIM_Patient_Sim-CCIMX6SBC_DEY-Debug/NIM_Patient_Sim</value>
        <value type="QString">/home/sw/workspace/Projects/build-NIM_Patient_Sim-CCIMX6SBC_DEY-Release/NIM_Patient_Sim</value>
        <value type="QString">/home/sw/workspace/Projects/build-NIM_Patient_Sim-CCIMX6SBC_DEY-Debug/NIM_Patient_Sim</value>
       </valuelist>
       <valuelist type="QVariantList" key="ProjectExplorer.RunConfiguration.LastDeployedHosts">
+       <value type="QString">10.74.113.161</value>
        <value type="QString">10.74.113.229</value>
        <value type="QString">10.74.113.159</value>
        <value type="QString">10.74.113.159</value>
@@ -289,8 +291,10 @@
        <value type="QString">/opt/NIM_Patient_Sim/bin</value>
        <value type="QString">/opt/NIM_Patient_Sim/bin</value>
        <value type="QString">/opt/NIM_Patient_Sim/bin</value>
+       <value type="QString">/opt/NIM_Patient_Sim/bin</value>
       </valuelist>
       <valuelist type="QVariantList" key="ProjectExplorer.RunConfiguration.LastDeployedSysroots">
+       <value type="QString"></value>
        <value type="QString"></value>
        <value type="QString"></value>
        <value type="QString"></value>
@@ -298,11 +302,13 @@
       <value type="bool" key="RemoteLinux.GenericDirectUploadStep.IgnoreMissingFiles">false</value>
       <value type="bool" key="RemoteLinux.GenericDirectUploadStep.Incremental">true</value>
       <valuelist type="QVariantList" key="RemoteLinux.LastDeployedLocalTimes">
+       <value type="QDateTime">2020-02-11T12:53:17.640</value>
        <value type="QDateTime">2020-01-31T18:05:59.594</value>
        <value type="QDateTime">2020-01-23T11:47:30.787</value>
        <value type="QDateTime">2020-01-31T12:50:00.394</value>
       </valuelist>
       <valuelist type="QVariantList" key="RemoteLinux.LastDeployedRemoteTimes">
+       <value type="QDateTime">2019-10-08T17:19:15.000</value>
        <value type="QDateTime">2019-09-27T22:32:54.000</value>
        <value type="QDateTime">2020-01-23T11:45:55.000</value>
        <value type="QDateTime">2019-09-27T17:56:09.000</value>

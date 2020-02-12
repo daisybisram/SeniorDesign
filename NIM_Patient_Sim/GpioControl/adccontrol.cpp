@@ -44,3 +44,6 @@ void AdcControl::Stop(void)
 {
     ldx_adc_stop_sampling(adc);
 }
+
+
+
