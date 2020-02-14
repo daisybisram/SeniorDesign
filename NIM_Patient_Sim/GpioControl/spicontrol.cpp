@@ -128,46 +128,14 @@ int SpiControl::spi_Write_DAC(uint8_t reg, uint16_t data)
 
 }
 
+//ADC Communication Functions: Address should be 9 bits
 
 int SpiControl::spi_Read_ADC(uint8_t reg, uint8_t *data)
 {
-
-uint8_t read_reg = 0;
-
-uint8_t tx_data8[3] = {read_reg, 0x00, 0x00};
-uint8_t rx_data8[3] = {0x00, 0x00, 0x00};
-
-//READ ACCESS CYCLE
-if (ldx_spi_write(spi_dev, tx_data8, 3) != EXIT_SUCCESS)
-        {
-            return EXIT_FAILURE;
-        }
-
-
-if (ldx_spi_read(spi_dev, rx_data8, 3) != EXIT_SUCCESS)
-        {
-            return EXIT_FAILURE;
-        }
-
-*data = rx_data8[1] << 8 | rx_data8[2];
-    return EXIT_SUCCESS;
 
 }
 
 int SpiControl::spi_Write_ADC(uint8_t reg, uint8_t data)
 {
-    uint8_t write_reg = 0;
-    uint8_t write_data_8MSB = data>>8;
-    uint8_t write_data_8LSB = data;
 
-    uint8_t tx_data8[3] = {write_reg, write_data_8MSB, write_data_8LSB};
-    uint8_t rx_data8[3] = {0x00, 0x00, 0x00};
-
-
-    if (ldx_spi_write(spi_dev, tx_data8, 3) != EXIT_SUCCESS)
-        {
-            return EXIT_FAILURE;
-        }
-
-    return EXIT_SUCCESS;
 }

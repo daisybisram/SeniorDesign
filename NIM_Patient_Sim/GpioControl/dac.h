@@ -11,7 +11,7 @@
 #define DAC_TRIGGER_ADDR	0x05		//synchronously load DACs set to synchronous mode by SYNC REG
 #define DAC_BRDCAST_ADDR	0x6		//forces DAC channels to update active data register DAC{[15:0]}
 #define DAC_STATUS_ADDR		0x7		//set reference alarm bit
-#define DACx_ADDR           0x8		//store 16 or 14 bit data to be loaded to DAC{[15:0]}
+#define DAC_OUT0_ADDR       0x08		//store 16 or 14 bit data to be loaded to DAC{[15:0]}
 
 
 #endif // DAC_H
