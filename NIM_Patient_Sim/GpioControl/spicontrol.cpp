@@ -11,7 +11,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include "dac.h"
+#include "daccontrol.h"
 
 #include <libdigiapix/spi.h>
 
@@ -125,6 +125,49 @@ int SpiControl::spi_Write_DAC(uint8_t reg, uint16_t data)
         }
 
     return EXIT_SUCCESS;
+
+}
+
+int SpiControl::DAC_output(uint8_t output, uint16_t data[], uint16_t delay_time_ms, uint16_t amplitude)
+{
+    uint16_t latency_array_size;
+    uint16_t latency[latency_array_size];
+    uint16_t count;
+    uint16_t i = 0;
+    uint16_t output_data_size;
+    uint16_t output_data[output_data_size];
+
+    if (delay_time_ms != 0)
+    {
+        latency_array_size = delay_time_ms * 16;        //1 ms of delay if delay_time_ms = 1
+        latency[latency_array_size];
+        for (count = 0; count<latency_array_size; count++)
+            {
+                latency[count] = 0x00;
+            }
+    }
+
+    output_data_size = latency_array_size + sizeof(&data);
+    for(count = 0; count < output_data_size; count++)
+    {
+       do
+        {
+            output_data[count] = latency[count];
+            count++;
+        }
+       while(count<latency_array_size);
+
+       output_data[count] = data[i];
+       i++;
+    }
+
+    //you had this on infinite loop before with i as an uint8_t
+    for (i = 0; i<output_data_size; i++)
+    {
+       spi_Write_DAC(output, output_data[i]);
+       spi_Write_DAC(DAC_TRIGGER_ADDR, 0x0000);         //Pulls LDAC LOW to update register
+       spi_Write_DAC(DAC_TRIGGER_ADDR, 0x0010);         //Set LDAC HIGH to reset synchronous mode
+    }
 
 }
 
