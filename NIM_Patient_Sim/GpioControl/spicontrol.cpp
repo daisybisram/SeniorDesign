@@ -128,16 +128,16 @@ int SpiControl::spi_Write_DAC(uint8_t reg, uint16_t data)
 
 }
 
-int SpiControl::DAC_output(uint8_t output, uint16_t data[], uint16_t delay_time_ms, uint16_t amplitude)
+int SpiControl::DAC_output(uint8_t output, uint16_t data[], uint16_t delay_time_ms, uint16_t amplitude_uV)
 {
-    uint16_t latency_array_size;
+    uint16_t latency_array_size = 0;
     uint16_t latency[latency_array_size];
     uint16_t count;
     uint16_t i = 0;
     uint16_t output_data_size;
     uint16_t output_data[output_data_size];
 
-    if (delay_time_ms != 0)
+    if (delay_time_ms != 0)                             //Set time delay on UI increments of 1ms/5ms?
     {
         latency_array_size = delay_time_ms * 16;        //1 ms of delay if delay_time_ms = 1
         latency[latency_array_size];
@@ -150,12 +150,20 @@ int SpiControl::DAC_output(uint8_t output, uint16_t data[], uint16_t delay_time_
     output_data_size = latency_array_size + sizeof(&data);
     for(count = 0; count < output_data_size; count++)
     {
-       do
-        {
-            output_data[count] = latency[count];
-            count++;
-        }
-       while(count<latency_array_size);
+       if (delay_time_ms != 0)
+        do
+         {
+             output_data[count] = latency[count];
+             count++;
+         }
+        while(count<latency_array_size);
+
+        /*if (amplitude_uV != 0)                    //set amplitude on UI waveform scales to it;
+         *                                          //maybe case statements? increment by 50 uV?
+          {
+
+          }
+        */
 
        output_data[count] = data[i];
        i++;
