@@ -55,9 +55,13 @@ MainWindow::MainWindow(QWidget *parent)
     spiControl->spi_Write_DAC(DAC_TRIGGER_ADDR, 0x0010);
 
     uint16_t delay_time_ms=6;
+    uint16_t gain;
     uint16_t amplitude_uV=6000;
-
-    spiControl->DAC_output(DAC_OUT0_ADDR, 0.01, delay_time_ms, amplitude_uV);
+    if(amplitude_uV)
+    {
+        
+    }
+    spiControl->DAC_output(DAC_OUT0_ADDR, gain, delay_time_ms, amplitude_uV);
 
 }
 
