@@ -21,7 +21,6 @@ public:
     int spi_Read_ADC(uint8_t reg, uint8_t *data);
     int spi_Write_ADC(uint8_t reg, uint8_t data);
     int DAC_output(uint8_t output, float_t gain, uint16_t delay_time_ms, uint16_t amplitude_uV);
-    //uint16_t * DAC_EMG_process(float_t gain, uint16_t amplitude_uV);
 
 
 public:

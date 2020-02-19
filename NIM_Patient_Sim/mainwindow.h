@@ -2,9 +2,10 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "GpioControl/gpiocontrol.h"
+#include "gpiocontrol.h"
 #include "adccontrol.h"
 #include "spicontrol.h"
+#include "daccontrol.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -22,6 +23,15 @@ public:
     GpioControl *gpioControl;
     AdcControl *adcControl;
     SpiControl *spiControl;
+
+private slots:
+    void on_up_Latency_released();
+
+    void on_down_Latency_released();
+
+    void on_up_Amplitude_released();
+
+    void on_down_Amplitude_released();
 
 private:
     Ui::MainWindow *ui;

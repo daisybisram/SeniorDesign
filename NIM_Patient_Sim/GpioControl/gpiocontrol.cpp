@@ -18,6 +18,7 @@ gpio_t *gpio_output3;
 #define USER_LED2   36
 #define STIM_DETECT 37
 
+
          /* Digital Potentiometer Addresses */
 #define RDAC_1 0000                                        
 #define RDAC_2 0001
@@ -39,18 +40,19 @@ int gpioCallback(void *arg);
 GpioControl::GpioControl(QWidget *parent) :
     QScrollArea(parent),
     ui(new Ui::GpioControl)
-{
+
+{//
     ui->setupUi(this);
 
-/* GPIO Input interrupt */
+// GPIO Input interrupt
     gpio_input0 = ldx_gpio_request((unsigned int)STIM_DETECT, GPIO_IRQ_EDGE_FALLING, REQUEST_SHARED);
     ldx_gpio_set_active_mode(gpio_input0, GPIO_ACTIVE_HIGH);
-    ldx_gpio_start_wait_interrupt(gpio_input0, &gpioCallback, this);
+    //ldx_gpio_start_wait_interrupt(gpio_input0, &gpioCallback, this);
 
-/*  GPIO TESTING  */
+//  GPIO TESTING
     gpio_output3 = ldx_gpio_request((unsigned int)GPIO_Test1, GPIO_OUTPUT_HIGH, REQUEST_SHARED);
 
-/* GPIO Outputs(LED) w/ PushButtons */
+// GPIO Outputs(LED) w/ PushButtons
     gpio_output0 = ldx_gpio_request((unsigned int)USER_LED0, GPIO_OUTPUT_LOW, REQUEST_SHARED);
     gpio_output1 = ldx_gpio_request((unsigned int)USER_LED1, GPIO_OUTPUT_LOW, REQUEST_SHARED);
     gpio_output2 = ldx_gpio_request((unsigned int)USER_LED2, GPIO_OUTPUT_LOW, REQUEST_SHARED);
@@ -71,14 +73,14 @@ GpioControl::~GpioControl()
     ldx_gpio_free(gpio_input0);
 }
 
-int gpioCallback(void *arg)
+/*int gpioCallback(void *arg)
 {
     GpioControl *gpioCntrl = (GpioControl*)(arg);
     gpioCntrl->ToggleGpio(USER_LED0);
     gpioCntrl->ToggleGpio(USER_LED1);
     gpioCntrl->ToggleGpio(USER_LED2);
     printf("Pulse Recieved\n");
-}
+}*/
 
 
 void GpioControl::ToggleGpio(int gpioNum)
@@ -98,3 +100,6 @@ void GpioControl::ToggleGpio(int gpioNum)
     ldx_gpio_set_value(gpio_output, output_value);
     ldx_gpio_free(gpio_output);
 }
+
+
+
