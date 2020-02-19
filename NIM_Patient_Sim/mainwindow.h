@@ -19,12 +19,15 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+
 public:
     GpioControl *gpioControl;
     AdcControl *adcControl;
     SpiControl *spiControl;
 
-private slots:
+signals:
+
+public slots:
     void on_up_Latency_released();
 
     void on_down_Latency_released();
@@ -33,7 +36,7 @@ private slots:
 
     void on_down_Amplitude_released();
 
-private:
+public:
     Ui::MainWindow *ui;
 };
 #endif // MAINWINDOW_H
