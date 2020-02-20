@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QLCDNumber>
 #include "gpiocontrol.h"
 #include "adccontrol.h"
 #include "spicontrol.h"
@@ -28,15 +29,14 @@ public:
 signals:
 
 public slots:
-    void on_up_Latency_released();
 
-    void on_down_Latency_released();
-
-    void on_up_Amplitude_released();
-
-    void on_down_Amplitude_released();
+    void onUpLatencyReleased(void);
+    void onDownLatencyReleased(void);
+    void onUpAmplitudeReleased(void);
+    void onDownAmplitudeReleased(void);
 
 public:
     Ui::MainWindow *ui;
+
 };
 #endif // MAINWINDOW_H

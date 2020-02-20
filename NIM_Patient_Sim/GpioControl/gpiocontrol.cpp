@@ -41,19 +41,14 @@ GpioControl::GpioControl(QWidget *parent) :
     QScrollArea(parent),
     ui(new Ui::GpioControl)
 
-{/*
+{
     ui->setupUi(this);
 
 // GPIO Input interrupt
     gpio_input0 = ldx_gpio_request((unsigned int)STIM_DETECT, GPIO_IRQ_EDGE_FALLING, REQUEST_SHARED);
 
     ldx_gpio_set_active_mode(gpio_input0, GPIO_ACTIVE_LOW);
-    ldx_gpio_start_wait_interrupt(gpio_input0, &gpioCallback, this);
-
-
-/*  GPIO TESTING
-    gpio_output3 = ldx_gpio_request((unsigned int)STIM_DETECT, GPIO_OUTPUT_LOW, REQUEST_SHARED);
-    ldx_gpio_set_value(STIM_DETECT, GPIO_LOW);
+    ldx_gpio_start_wait_interrupt(gpio_input0, &gpioCallback1, this);
 
 // GPIO Outputs(LED) w/ PushButtons
     gpio_output0 = ldx_gpio_request((unsigned int)USER_LED0, GPIO_OUTPUT_LOW, REQUEST_SHARED);
@@ -62,7 +57,7 @@ GpioControl::GpioControl(QWidget *parent) :
     if (!gpio_output0 || !gpio_output1 || !gpio_output2) {
         printf("Failed to initialize output GPIO\n");
     }
-    connect(ui->pushButton, &QPushButton::released, [this]() { ToggleGpio(USER_LED2); });
+   /* connect(ui->pushButton, &QPushButton::released, [this]() { ToggleGpio(USER_LED2); });
     connect(ui->pushButton_2, &QPushButton::released, [this]() { ToggleGpio(USER_LED1); });
     connect(ui->pushButton_3, &QPushButton::released, [this]() { ToggleGpio(USER_LED0); });*/
 }

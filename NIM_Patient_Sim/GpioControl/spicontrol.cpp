@@ -104,7 +104,6 @@ int SpiControl::spi_Read_DAC(uint8_t reg, uint16_t *data)
                 return EXIT_FAILURE;
             }
 
-   *data = rx_data8[1] << 8 | rx_data8[2];
         return EXIT_SUCCESS;
 
 }
@@ -129,7 +128,7 @@ int SpiControl::spi_Write_DAC(uint8_t reg, uint16_t data)
 }
 
 
-int SpiControl::DAC_output(uint8_t output, float_t gain, uint16_t delay_time_ms, uint16_t amplitude_uV)
+int SpiControl::DAC_output(uint8_t output, float_t gain, uint16_t delay_time_ms, uint32_t amplitude_uV)
 {
     uint16_t latency_array_size = 0;
     uint16_t count;

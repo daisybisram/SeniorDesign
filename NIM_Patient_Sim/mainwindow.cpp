@@ -17,19 +17,20 @@ int EMG_triggered_flag = 0;
 
 float_t gain;
 uint16_t delay_time_ms=0;
-uint16_t amplitude_uV=4000;
+uint32_t amplitude_uV=4000;
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+
     ui->setupUi(this);
 
     adcControl = new AdcControl();
     spiControl = new SpiControl();
 
     uint16_t data;
-    //spiControl->spi_Read_DAC(DAC_CONFIG_ADDR, &data);
+    spiControl->spi_Read_DAC(DAC_DEVID_ADDR, &data);
     //spiControl->spi_Write_DAC(DAC_CONFIG_ADDR, 0x0000);
 
     //Initialize GPIOs
@@ -46,6 +47,14 @@ MainWindow::MainWindow(QWidget *parent)
     spiControl->spi_Write_DAC(DAC_GAIN_ADDR, 0x0100);
     spiControl->spi_Write_DAC(DAC_TRIGGER_ADDR, 0x0010);
 
+
+    //Set amplitude and latency on UI
+    connect(ui->latency_UP_button, &QPushButton::released, [this]() { onUpLatencyReleased(); });
+    connect(ui->latency_DOWN_button, &QPushButton::released, [this]() { onDownLatencyReleased(); });
+    connect(ui->amplitude_UP_button, &QPushButton::released, [this]() { onUpAmplitudeReleased(); });
+    connect(ui->amplitude_DOWN_button, &QPushButton::released, [this]() { onDownAmplitudeReleased(); });
+
+
     if(amplitude_uV<6251)
     {
         gain =0.01;
@@ -53,13 +62,6 @@ MainWindow::MainWindow(QWidget *parent)
     else gain =0.1;
 
     spiControl->DAC_output(DAC_OUT0_ADDR, gain, delay_time_ms, amplitude_uV);
-
-    //Set amplitude and latency on UI
-
-    connect(ui->latency_UP_button, &QPushButton::released, [this]() { on_up_Latency_released(); });
-    connect(ui->latency_DOWN_button, &QPushButton::released, [this]() { on_down_Latency_released(); });
-    connect(ui->amplitude_UP_button, &QPushButton::released, [this]() { on_up_Amplitude_released(); });
-    connect(ui->amplitude_DOWN_button, &QPushButton::released, [this]() { on_down_Amplitude_released(); });
 
     //Constant checking of the trigger flag (if the falling edge on GPIO STIM_DETECT occurs proceed to DAC_output function)
 
@@ -75,7 +77,7 @@ MainWindow::MainWindow(QWidget *parent)
             }
             else gain =0.1;
 
-            //Gain_Control_Gpio(gain, RELAY_GPIO);    //Gain set in HW
+            Gain_Control_Gpio(gain, RELAY_GPIO);    //Gain set in HW
 
             spiControl->DAC_output(DAC_OUT0_ADDR, gain, delay_time_ms, amplitude_uV);   //Latency and Ammplitude set from UI
         }
@@ -106,24 +108,41 @@ int Gain_Control_Gpio(float_t gain, int gpioNum)
     ldx_gpio_free(gpio_output);
 }
 
-void MainWindow::on_up_Latency_released()
+void MainWindow::onUpLatencyReleased(void)
 {
-    delay_time_ms++;
+    if(delay_time_ms<40)
+    {
+       delay_time_ms++;
+    }
+    ui->latencyDisplay->display((int) delay_time_ms);
 }
 
-void MainWindow::on_down_Latency_released()
+void MainWindow::onDownLatencyReleased(void)
 {
-    delay_time_ms--;
+    if(delay_time_ms>0)
+    {
+        delay_time_ms--;
+    }
+    ui->latencyDisplay->display((int) delay_time_ms);
 }
 
-void MainWindow::on_up_Amplitude_released()
+void MainWindow::onUpAmplitudeReleased(void)
 {
-    amplitude_uV= amplitude_uV + 100;
+
+    if(amplitude_uV<100000)
+    {
+        amplitude_uV= amplitude_uV + 100;
+    }
+    ui->amplitudeDisplay->display((int) amplitude_uV);
 }
 
-void MainWindow::on_down_Amplitude_released()
+void MainWindow::onDownAmplitudeReleased(void)
 {
-    amplitude_uV= amplitude_uV - 100;
+    if(amplitude_uV>100)
+    {
+        amplitude_uV= amplitude_uV - 100;
+    }
+    ui->amplitudeDisplay->display((int) amplitude_uV);
 }
 
 void ToggleGpio(int gpioNum)

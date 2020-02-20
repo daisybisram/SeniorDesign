@@ -1,5 +1,11 @@
 #include "mainwindow.h"
 
+#include <QMainWindow>
+#include "gpiocontrol.h"
+#include "adccontrol.h"
+#include "spicontrol.h"
+#include "daccontrol.h"
+
 #include <QApplication>
 
 int main(int argc, char *argv[])
@@ -9,3 +15,4 @@ int main(int argc, char *argv[])
     w.show();
     return a.exec();
 }
+
