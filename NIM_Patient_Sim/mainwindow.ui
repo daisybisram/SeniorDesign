@@ -526,7 +526,7 @@ p, li { white-space: pre-wrap; }
        <enum>QLCDNumber::Flat</enum>
       </property>
       <property name="intValue" stdset="0">
-       <number>500</number>
+       <number>4000</number>
       </property>
      </widget>
     </item>

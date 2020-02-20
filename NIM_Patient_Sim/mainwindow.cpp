@@ -16,8 +16,8 @@ void ToggleGpio(int gpioNum);
 int EMG_triggered_flag = 0;
 
 float_t gain;
-uint16_t delay_time_ms=0;
-uint32_t amplitude_uV=4000;
+uint16_t delay_time_ms=5;
+uint32_t amplitude_uV=000;
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -55,41 +55,24 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->amplitude_DOWN_button, &QPushButton::released, [this]() { onDownAmplitudeReleased(); });
 
 
-    if(amplitude_uV<6251)
+}
+
+//If the falling edge on GPIO STIM_DETECT occurs this function is called for the DAC_output
+int gpio_EMG_trigger_interrupt(void *arg)
+{
+    SpiControl *spi;
+    ToggleGpio(USER_LED0);
+
+    if(amplitude_uV<6251)                   //Gain set in SW
     {
-        gain =0.01;
+         gain =0.01;
     }
     else gain =0.1;
 
-    spiControl->DAC_output(DAC_OUT0_ADDR, gain, delay_time_ms, amplitude_uV);
+    Gain_Control_Gpio(gain, RELAY_GPIO);    //Gain set in HW
 
-    //Constant checking of the trigger flag (if the falling edge on GPIO STIM_DETECT occurs proceed to DAC_output function)
+    spi->DAC_output(DAC_OUT0_ADDR, gain, delay_time_ms, amplitude_uV);   //Latency and Ammplitude set from UI
 
-    while(1)
-    {
-        if(EMG_triggered_flag == 1)
-        {
-            EMG_triggered_flag = 0;                 //Clear the flag
-
-            if(amplitude_uV<6251)                   //Gain set in SW
-            {
-                gain =0.01;
-            }
-            else gain =0.1;
-
-            Gain_Control_Gpio(gain, RELAY_GPIO);    //Gain set in HW
-
-            spiControl->DAC_output(DAC_OUT0_ADDR, gain, delay_time_ms, amplitude_uV);   //Latency and Ammplitude set from UI
-        }
-    }
-
-}
-
-int gpio_EMG_trigger_interrupt(void *arg)
-{
-    GpioControl *gpioCntrl = (GpioControl*)(arg);
-    ToggleGpio(USER_LED0);
-    EMG_triggered_flag = 1;
 }
 
 int Gain_Control_Gpio(float_t gain, int gpioNum)

@@ -104,6 +104,7 @@ int SpiControl::spi_Read_DAC(uint8_t reg, uint16_t *data)
                 return EXIT_FAILURE;
             }
 
+   *data = rx_data8[1] << 8 | rx_data8[2];
         return EXIT_SUCCESS;
 
 }
@@ -152,14 +153,14 @@ int SpiControl::DAC_output(uint8_t output, float_t gain, uint16_t delay_time_ms,
 
     for (count = 0; count<latency_array_size; count++)
         {
-            output_data[count] = 32768;
-            //output_data[count] = 0;
+            //output_data[count] = 32768;
+            output_data[count] = 0;
         }
 
     for(count; count<output_data_size; count++)
         {
             output_data[count] = (uint16_t)raw_EMG_data[i];
-             i++;
+            i++;
         }
 
 
@@ -169,6 +170,7 @@ int SpiControl::DAC_output(uint8_t output, float_t gain, uint16_t delay_time_ms,
        spi_Write_DAC(output, output_data[i]);
        spi_Write_DAC(DAC_TRIGGER_ADDR, 0x0000);         //Pulls LDAC LOW to update register
        spi_Write_DAC(DAC_TRIGGER_ADDR, 0x0010);         //Set LDAC HIGH to reset synchronous mode
+
     }
 
 }
