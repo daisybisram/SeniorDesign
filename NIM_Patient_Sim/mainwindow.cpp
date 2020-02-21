@@ -10,14 +10,13 @@
 
 int gpioArray[36];
 int gpio_EMG_trigger_interrupt(void *arg);
-int gpioCallback(void *arg);
 int Gain_Control_Gpio(float_t gain, int gpioNum);
 void ToggleGpio(int gpioNum);
 int EMG_triggered_flag = 0;
 
 float_t gain;
-uint16_t delay_time_ms=5;
-uint32_t amplitude_uV=000;
+uint16_t delay_time_ms=0;
+uint32_t amplitude_uV=6000;
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -31,7 +30,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     uint16_t data;
     spiControl->spi_Read_DAC(DAC_DEVID_ADDR, &data);
-    //spiControl->spi_Write_DAC(DAC_CONFIG_ADDR, 0x0000);
 
     //Initialize GPIOs
     gpio_t *gpio_input0;
@@ -53,7 +51,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->latency_DOWN_button, &QPushButton::released, [this]() { onDownLatencyReleased(); });
     connect(ui->amplitude_UP_button, &QPushButton::released, [this]() { onUpAmplitudeReleased(); });
     connect(ui->amplitude_DOWN_button, &QPushButton::released, [this]() { onDownAmplitudeReleased(); });
-
 
 }
 
