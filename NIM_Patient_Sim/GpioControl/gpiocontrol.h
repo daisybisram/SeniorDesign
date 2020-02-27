@@ -16,7 +16,7 @@ class GpioControl : public QScrollArea
 public:
     explicit GpioControl(QWidget *parent = nullptr);
     ~GpioControl();
-    void Gain_Control_Gpio(float_t gain, int gpioNum);
+    void ToggleGpio(int gpioNum);
 
 public:
     Ui::GpioControl *ui;
@@ -24,7 +24,7 @@ public:
 signals:
 
 public slots:
-    void ToggleGpio(int gpioNum);
+
 };
 
 #endif // GPIOCONTROL_H

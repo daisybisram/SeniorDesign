@@ -19,14 +19,13 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-
+    Ui::MainWindow *ui;
 
 public:
     GpioControl *gpioControl;
     AdcControl *adcControl;
     SpiControl *spiControl;
 
-signals:
 
 public slots:
 
@@ -35,8 +34,6 @@ public slots:
     void onUpAmplitudeReleased(void);
     void onDownAmplitudeReleased(void);
 
-public:
-    Ui::MainWindow *ui;
 
 };
 #endif // MAINWINDOW_H

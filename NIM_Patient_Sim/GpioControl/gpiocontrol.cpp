@@ -18,22 +18,6 @@ gpio_t *gpio_output3;
 #define USER_LED2   36
 #define STIM_DETECT 37
 
-
-         /* Digital Potentiometer Addresses */
-#define RDAC_1 0000                                        
-#define RDAC_2 0001
-         /* Digital Potentiometer Commands */
-#define COMMAND_1 0000   //Do Nothing
-//#define COMMAND_4 0100   //Decrement RDAC(1 or 2) by 6dB
-//#define COMMAND_5 0101   //Decrement all by 6dB
-#define COMMAND_6 0110   //Decrement RDAC(1 or 2) by 1
-//#define COMMAND_7 0111   //Decrement all by 1
-//#define COMMAND_12 1100  //Increment RDAC(1 or 2) by 6dB
-//#define COMMAND_13 1101  //Increment all by 6dB
-#define COMMAND_14 1110  //Increment RDAC(1 or 2) by 1
-//#define COMMAND_15 1111  //Increment all by 1
-
-
 int gpioValArray[36];
 int gpioCallback1(void *arg);
 
