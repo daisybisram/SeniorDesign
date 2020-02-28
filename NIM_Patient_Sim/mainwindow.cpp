@@ -32,8 +32,8 @@ MainWindow::MainWindow(QWidget *parent)
     spiControl = new SpiControl();
 
 
-//    uint16_t data;
-//    spiControl->spi_Read_DAC(DAC_DEVID_ADDR, &data);
+    uint16_t data;
+    spiControl->spi_Read_DAC(DAC_DEVID_ADDR, &data);
 
 
 /* ADS8910b */
@@ -113,7 +113,8 @@ int Gain_Control_Gpio(float_t gain, int gpioNum)
     gpio_output = ldx_gpio_request((unsigned int)gpioNum, GPIO_OUTPUT_LOW, REQUEST_SHARED);
 
     if (gain > 0.01)
-    {   output_value = GPIO_HIGH;
+    {
+        output_value = GPIO_HIGH;
         ToggleGpio(35);
     }
 
