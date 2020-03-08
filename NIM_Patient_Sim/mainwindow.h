@@ -27,12 +27,15 @@ public:
     SpiControl *spiControl;
 
 
+
+
 public slots:
 
     void onUpLatencyReleased(void);
     void onDownLatencyReleased(void);
     void onUpAmplitudeReleased(void);
     void onDownAmplitudeReleased(void);
+    void adcConversion(void);
 
 
 };

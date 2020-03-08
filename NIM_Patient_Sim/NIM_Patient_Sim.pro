@@ -25,6 +25,7 @@ HEADERS += \
     mainwindow.h
 
 FORMS += \
+    ADC_window.ui \
     mainwindow.ui
 
 # Default rules for deployment.
